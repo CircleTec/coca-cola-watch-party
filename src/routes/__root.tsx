@@ -80,19 +80,43 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Coca-Cola World Cup Finals Watch Party | Register Now" },
+      {
+        name: "description",
+        content:
+          "Register for the Coca-Cola World Cup Finals Watch Party. Join fans for the ultimate finals-night experience with giant screens, cold Coca-Cola, and unforgettable energy.",
+      },
+      { name: "author", content: "Coca-Cola" },
+      {
+        property: "og:title",
+        content: "Coca-Cola World Cup Finals Watch Party",
+      },
+      {
+        property: "og:description",
+        content:
+          "Register now for the ultimate World Cup finals watch party experience.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@CocaCola" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: GOOGLE_FONTS_URL,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
