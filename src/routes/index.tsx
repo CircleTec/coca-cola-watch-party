@@ -65,8 +65,8 @@ function Index() {
 
             <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-coke-white/90 sm:text-xl">
               Join us for the ultimate watch party. Experience the biggest match
-              of the year with an exclusive crowd of 700 fans, giant screens,
-              ice-cold Coca-Cola, and finals-night energy you won&apos;t forget.
+              of the year with giant screens, ice-cold Coca-Cola, and
+              finals-night energy you won&apos;t forget.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
