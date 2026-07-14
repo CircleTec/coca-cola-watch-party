@@ -80,7 +80,7 @@ function Index() {
               </div>
               <div className="flex items-center gap-2">
                 <LocationIcon />
-                <span>Coca-Cola Stadium Park</span>
+                <span>Skylight Hotel</span>
               </div>
             </div>
           </div>
