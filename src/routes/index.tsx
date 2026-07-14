@@ -72,11 +72,11 @@ function Index() {
             <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
               <div className="flex items-center gap-2">
                 <CalendarIcon />
-                <span>December 18, 2026</span>
+                <span>July 19, 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <ClockIcon />
-                <span>7:00 PM kickoff</span>
+                <span>6:00 PM kickoff</span>
               </div>
               <div className="flex items-center gap-2">
                 <LocationIcon />
@@ -188,7 +188,7 @@ function Index() {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+251 911 000 000"
                       className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                     />
                   </div>
