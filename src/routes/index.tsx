@@ -51,7 +51,7 @@ function Index() {
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-coke-white/20 bg-coke-white/10 px-4 py-2 backdrop-blur-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-coke-red" />
               <span className="text-xs font-semibold uppercase tracking-widest text-coke-white">
-                Limited spots available
+                RSVP by July 17th
               </span>
             </div>
 
@@ -64,9 +64,9 @@ function Index() {
             </h1>
 
             <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-coke-white/90 sm:text-xl">
-              Experience the biggest match of the year with thousands of fans,
-              giant screens, ice-cold Coca-Cola, and finals-night energy you
-              won&apos;t forget.
+              Join us for the ultimate watch party. Experience the biggest match
+              of the year with an exclusive crowd of 700 fans, giant screens,
+              ice-cold Coca-Cola, and finals-night energy you won&apos;t forget.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
