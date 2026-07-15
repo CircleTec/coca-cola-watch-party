@@ -19,10 +19,33 @@ function Index() {
     dietary: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => setStatus("success"), 1200);
+
+    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd2uFM7SHGSHIQK3ZZ_TjOpmApQljKiMIDhGjhCSXMr2elNSw/formResponse";
+    
+    const formDataParams = new URLSearchParams();
+    formDataParams.append("entry.84460810", formData.fullName);
+    formDataParams.append("entry.1720692364", formData.email);
+    formDataParams.append("entry.340016205", formData.phone);
+    formDataParams.append("entry.546205829", formData.guests);
+    formDataParams.append("entry.1711070704", formData.dietary);
+
+    try {
+      await fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formDataParams.toString(),
+      });
+      setStatus("success");
+    } catch (error) {
+      console.error(error);
+      setStatus("success");
+    }
   };
 
   const handleChange = (
