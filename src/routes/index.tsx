@@ -16,7 +16,7 @@ function Index() {
     email: "",
     phone: "",
     guests: "1",
-    dietary: "",
+    organization: "",
   });
 
   const handleSubmit = async (e: FormEvent) => {
@@ -30,7 +30,7 @@ function Index() {
     formDataParams.append("entry.1720692364", formData.email);
     formDataParams.append("entry.340016205", formData.phone);
     formDataParams.append("entry.546205829", formData.guests);
-    formDataParams.append("entry.1711070704", formData.dietary);
+    formDataParams.append("entry.1711070704", formData.organization);
 
     try {
       await fetch(formUrl, {
@@ -144,7 +144,7 @@ function Index() {
                       email: "",
                       phone: "",
                       guests: "1",
-                      dietary: "",
+                      organization: "",
                     });
                   }}
                   className="mt-6 inline-flex items-center justify-center rounded-full border border-coke-white/20 px-6 py-2.5 text-sm font-semibold text-coke-white transition-colors hover:bg-coke-white/10"
@@ -244,19 +244,19 @@ function Index() {
 
                 <div className="space-y-1.5">
                   <label
-                    htmlFor="dietary"
+                    htmlFor="organization"
                     className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
                   >
-                    Dietary preferences / accessibility needs
+                    Organization / Brand
                   </label>
-                  <textarea
-                    id="dietary"
-                    name="dietary"
-                    rows={3}
-                    value={formData.dietary}
+                  <input
+                    id="organization"
+                    name="organization"
+                    type="text"
+                    value={formData.organization}
                     onChange={handleChange}
-                    placeholder="Let us know if you have any requirements..."
-                    className="w-full resize-none rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                    placeholder="e.g. Acme Corp"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                   />
                 </div>
 
