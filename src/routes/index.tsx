@@ -120,8 +120,8 @@ function Index() {
                 RESERVE YOUR SPOT
               </h2>
               <p className="mt-3 text-coke-white/70">
-                Fill in your details below. We&apos;ll send your entry pass and
-                event updates via email.
+                Fill in your details below to request an invite. We&apos;ll notify
+                you via email once your spot is approved by the organizer.
               </p>
             </div>
 
@@ -131,11 +131,11 @@ function Index() {
                   <CheckIcon />
                 </div>
                 <h3 className="font-display text-3xl text-coke-white">
-                  YOU&apos;RE IN!
+                  REQUEST RECEIVED
                 </h3>
                 <p className="mt-3 text-coke-white/80">
-                  Check your inbox for your watch party pass. See you on finals
-                  night.
+                  Your request is pending. We&apos;ll send your watch party pass
+                  once the organizer approves your spot!
                 </p>
                 <button
                   onClick={() => {
