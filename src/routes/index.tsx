@@ -15,7 +15,6 @@ function Index() {
     fullName: "",
     email: "",
     phone: "",
-    guests: "1",
     organization: "",
   });
 
@@ -29,7 +28,7 @@ function Index() {
     formDataParams.append("entry.84460810", formData.fullName);
     formDataParams.append("entry.1720692364", formData.email);
     formDataParams.append("entry.340016205", formData.phone);
-    formDataParams.append("entry.546205829", formData.guests);
+    formDataParams.append("entry.546205829", "1");
     formDataParams.append("entry.1711070704", formData.organization);
 
     try {
@@ -157,7 +156,6 @@ function Index() {
                       fullName: "",
                       email: "",
                       phone: "",
-                      guests: "1",
                       organization: "",
                     });
                   }}
@@ -210,50 +208,22 @@ function Index() {
                   />
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <label
-                      htmlFor="phone"
-                      className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
-                    >
-                      Phone
-                    </label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+251 911 000 000"
-                      className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label
-                      htmlFor="guests"
-                      className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
-                    >
-                      Guests
-                    </label>
-                    <select
-                      id="guests"
-                      name="guests"
-                      value={formData.guests}
-                      onChange={handleChange}
-                      className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
-                    >
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option
-                          key={n}
-                          value={n}
-                          className="bg-coke-black text-coke-white"
-                        >
-                          {n} {n === 1 ? "guest" : "guests"}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="phone"
+                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
+                  >
+                    Phone
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+251 911 000 000"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                  />
                 </div>
 
                 <div className="space-y-1.5">
