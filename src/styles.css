@@ -42,6 +42,14 @@
 
   --font-display: "Bebas Neue", sans-serif;
   --font-sans: "Barlow", sans-serif;
+  --font-you2013: "You2013", sans-serif;
+}
+
+@font-face {
+  font-family: "You2013";
+  src: url("/fonts/You2013-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 :root {
