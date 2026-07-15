@@ -59,7 +59,7 @@ function Index() {
     <main className="relative min-h-screen bg-coke-black text-coke-white">
       <div className="grid min-h-screen lg:grid-cols-2">
         {/* Hero side */}
-        <section className="relative flex min-h-[40vh] flex-col justify-end overflow-hidden lg:min-h-screen">
+        <section className="relative flex min-h-[40vh] flex-col justify-between overflow-hidden lg:min-h-screen">
           <img
             src={heroImage}
             alt="Crowded Coca-Cola World Cup finals watch party at night with a giant screen and stadium lights"
@@ -70,7 +70,7 @@ function Index() {
           <div className="absolute inset-0 bg-gradient-to-t from-coke-black via-coke-black/70 to-transparent" />
           <div className="absolute inset-0 bg-coke-red/10 mix-blend-multiply" />
 
-          <div className="absolute top-6 left-6 right-6 z-20 flex items-start justify-between lg:top-1/2 lg:left-12 lg:right-12 lg:-translate-y-1/2 lg:items-center">
+          <div className="relative z-20 flex w-full items-start justify-between p-6 sm:p-10 lg:p-16">
             <img
               src="/coca-cola-logo.svg"
               alt="Coca-Cola"
@@ -84,7 +84,7 @@ function Index() {
             />
           </div>
 
-          <div className="relative z-10 p-6 sm:p-10 lg:p-16">
+          <div className="relative z-10 p-6 pt-0 sm:p-10 sm:pt-0 lg:p-16 lg:pt-0">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-coke-white/20 bg-coke-white/10 px-4 py-2 backdrop-blur-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-coke-red" />
               <span className="text-xs font-semibold uppercase tracking-widest text-coke-white">
