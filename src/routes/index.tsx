@@ -10,6 +10,7 @@ export const Route = createFileRoute("/")({
 type FormStatus = "idle" | "submitting" | "success";
 
 function Index() {
+  const isRegistrationClosed = true;
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -130,14 +131,28 @@ function Index() {
                 Coca-Cola presents
               </p>
               <h2 className="mt-2 font-display text-4xl tracking-tight text-coke-white sm:text-5xl">
-                RESERVE YOUR SPOT
+                {isRegistrationClosed ? "RSVP CLOSED" : "RESERVE YOUR SPOT"}
               </h2>
               <p className="mt-3 text-coke-white/70">
-                Fill in your details below to confirm your RSVP. We&apos;ll send your entry pass via email once approved by the organizer.
+                {isRegistrationClosed 
+                  ? "The RSVP window has ended. Please reach out to the organizers if you have any questions."
+                  : "Fill in your details below to confirm your RSVP. We'll send your entry pass via email once approved by the organizer."}
               </p>
             </div>
 
-            {status === "success" ? (
+            {isRegistrationClosed ? (
+              <div className="rounded-2xl border border-coke-white/20 bg-coke-white/5 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
+                  <InfoIcon />
+                </div>
+                <h3 className="font-display text-3xl text-coke-white">
+                  REGISTRATION CLOSED
+                </h3>
+                <p className="mt-3 text-coke-white/80">
+                  The RSVP window has closed. Thank you for your interest!
+                </p>
+              </div>
+            ) : status === "success" ? (
               <div className="rounded-2xl border border-coke-red/30 bg-coke-red/10 p-8 text-center">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
                   <CheckIcon />
@@ -377,6 +392,27 @@ function Spinner() {
         fill="currentColor"
         d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0 1 4 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       />
+    </svg>
+  );
+}
+
+function InfoIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
     </svg>
   );
 }
