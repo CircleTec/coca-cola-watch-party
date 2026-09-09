@@ -93,8 +93,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Register now for the ultimate Ethiopian New Year's Eve concert experience.",
       },
       { property: "og:type", content: "website" },
+      {
+        property: "og:image",
+        content: "https://fantaenqutatash.vercel.app/Fanta-Enkutatash-_All-in-one.jpg",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Fanta" },
+      {
+        name: "twitter:image",
+        content: "https://fantaenqutatash.vercel.app/Fanta-Enkutatash-_All-in-one.jpg",
+      },
     ],
     links: [
       {
