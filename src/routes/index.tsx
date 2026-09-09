@@ -1,16 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
-const heroImage = "/hero-party.jpg";
+const heroImage = "/Fanta-Enkutatash-_All-in-one.jpg";
+
+type IndexSearch = {
+  t?: string; // Obfuscated token for ticket type
+};
+
+const TICKET_MAP: Record<string, string> = {
+  "7x9p2q": "Regular",
+  "v4k8m1": "VIP",
+  "z9w3r5": "VVIP",
+};
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): IndexSearch => {
+    return {
+      t: search.t as string | undefined,
+    };
+  },
   component: Index,
 });
 
 type FormStatus = "idle" | "submitting" | "success";
 
 function Index() {
-  const isRegistrationClosed = true;
+  const { t } = Route.useSearch();
+  // Map the random token to the ticket type, defaulting to Regular if missing or invalid
+  const ticketType = t ? TICKET_MAP[t] || "Regular" : "Regular";
+  
+  const isRegistrationClosed = false; // We should probably keep this false if they're actively sending links!
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,13 +42,13 @@ function Index() {
     e.preventDefault();
     setStatus("submitting");
 
-    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd2uFM7SHGSHIQK3ZZ_TjOpmApQljKiMIDhGjhCSXMr2elNSw/formResponse";
+    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSerxQ4L9M5V2UeAHY7-rwEc0IAIGTAXcfUa0dYVuaUx6Sxueg/formResponse";
     
     const formDataParams = new URLSearchParams();
     formDataParams.append("entry.84460810", formData.fullName);
     formDataParams.append("entry.1720692364", formData.email);
     formDataParams.append("entry.340016205", formData.phone);
-    formDataParams.append("entry.546205829", "1");
+    formDataParams.append("entry.546205829", ticketType);
     formDataParams.append("entry.1711070704", formData.organization);
 
     try {
@@ -56,60 +75,56 @@ function Index() {
   };
 
   return (
-    <main className="relative min-h-screen bg-coke-black text-coke-white">
+    <main className="relative min-h-screen bg-fanta-black text-fanta-white">
       <div className="grid min-h-screen lg:grid-cols-2">
         {/* Hero side */}
         <section className="relative flex min-h-[40vh] flex-col justify-between overflow-hidden lg:min-h-screen">
           <img
             src={heroImage}
-            alt="Crowded Coca-Cola World Cup finals watch party at night with a giant screen and stadium lights"
+            alt="Crowded Fanta Enqutatash New Year's Eve Concert at night with a giant screen and stadium lights"
             className="absolute inset-0 h-full w-full object-cover"
             width={1920}
             height={1280}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-coke-black via-coke-black/70 to-transparent" />
-          <div className="absolute inset-0 bg-coke-red/10 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-fanta-black via-fanta-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-fanta-orange/10 mix-blend-multiply" />
 
           <div className="relative z-20 flex w-full items-start justify-between p-6 sm:p-10 lg:p-16">
             <img
-              src="/coca-cola-logo.svg"
-              alt="Coca-Cola"
+              src="/fanta-logo-white-outline.png"
+              alt="Fanta"
               className="h-8 w-auto object-contain lg:h-12"
-              style={{ filter: 'brightness(0) invert(1)' }}
+              
             />
-            <img
-              src="/wc26.png"
-              alt="World Cup 2026"
-              className="h-16 w-auto object-contain lg:h-28"
-            />
+            
           </div>
 
           <div className="relative z-10 p-6 pt-0 sm:p-10 sm:pt-0 lg:p-16 lg:pt-0">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-coke-white/20 bg-coke-white/10 px-4 py-2 backdrop-blur-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-coke-red" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-coke-white">
-                RSVP by July 17th
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-fanta-white/20 bg-fanta-white/10 px-4 py-2 backdrop-blur-sm">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-fanta-orange" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-fanta-white">
+                RSVP by Sep 8th
               </span>
             </div>
 
-            <h1 className="font-you2013 text-6xl leading-[0.9] tracking-tight text-coke-white sm:text-7xl lg:text-8xl">
-              WORLD CUP
+            <h1 className="font-you2013 text-6xl leading-[0.9] tracking-tight text-fanta-white sm:text-7xl lg:text-8xl">
+              ENQUTATASH
               <br />
-              <span className="text-coke-red">FINALS</span>
+              <span className="text-fanta-orange">NEW YEAR'S EVE</span>
               <br />
-              WATCH PARTY
+              CONCERT
             </h1>
 
-            <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-coke-white/90 sm:text-xl">
-              Join us for the ultimate watch party. Experience the biggest match
-              of the year with giant screens, ice-cold Coca-Cola, and
-              finals-night energy you won&apos;t forget.
+            <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-fanta-white/90 sm:text-xl">
+              Join us for the ultimate celebration. Experience an unforgettable
+              New Year's Eve with live music, ice-cold Fanta, and
+              electric energy as we ring in the Ethiopian New Year.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
+            <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-fanta-white/80">
               <div className="flex items-center gap-2">
                 <CalendarIcon />
-                <span>July 19, 2026</span>
+                <span>Sep 10, 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <ClockIcon />
@@ -117,23 +132,23 @@ function Index() {
               </div>
               <div className="flex items-center gap-2">
                 <LocationIcon />
-                <span>Skylight Hotel</span>
+                <span>Ghion Hotel</span>
               </div>
             </div>
           </div>
         </section>
 
         {/* Form side */}
-        <section className="relative flex flex-col justify-center bg-coke-black px-6 py-12 sm:px-10 lg:px-16">
+        <section className="relative flex flex-col justify-center bg-fanta-black px-6 py-12 sm:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-md">
             <div className="mb-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-coke-red">
-                Coca-Cola presents
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fanta-orange">
+                Fanta presents
               </p>
-              <h2 className="mt-2 font-display text-4xl tracking-tight text-coke-white sm:text-5xl">
+              <h2 className="mt-2 font-display text-4xl tracking-tight text-fanta-white sm:text-5xl">
                 {isRegistrationClosed ? "RSVP CLOSED" : "RESERVE YOUR SPOT"}
               </h2>
-              <p className="mt-3 text-coke-white/70">
+              <p className="mt-3 text-fanta-white/70">
                 {isRegistrationClosed 
                   ? "The RSVP window has ended. Please reach out to the organizers if you have any questions."
                   : "Fill in your details below to confirm your RSVP. We'll send your entry pass via email once approved by the organizer."}
@@ -141,26 +156,26 @@ function Index() {
             </div>
 
             {isRegistrationClosed ? (
-              <div className="rounded-2xl border border-coke-white/20 bg-coke-white/5 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
+              <div className="rounded-2xl border border-fanta-white/20 bg-fanta-white/5 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-fanta-orange text-fanta-white">
                   <InfoIcon />
                 </div>
-                <h3 className="font-display text-3xl text-coke-white">
+                <h3 className="font-display text-3xl text-fanta-white">
                   REGISTRATION CLOSED
                 </h3>
-                <p className="mt-3 text-coke-white/80">
+                <p className="mt-3 text-fanta-white/80">
                   The RSVP window has closed. Thank you for your interest!
                 </p>
               </div>
             ) : status === "success" ? (
-              <div className="rounded-2xl border border-coke-red/30 bg-coke-red/10 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
+              <div className="rounded-2xl border border-fanta-orange/30 bg-fanta-orange/10 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-fanta-orange text-fanta-white">
                   <CheckIcon />
                 </div>
-                <h3 className="font-display text-3xl text-coke-white">
+                <h3 className="font-display text-3xl text-fanta-white">
                   RSVP RECEIVED
                 </h3>
-                <p className="mt-3 text-coke-white/80">
+                <p className="mt-3 text-fanta-white/80">
                   Your RSVP is being reviewed. We&apos;ll send your watch party pass
                   once the organizer confirms your spot!
                 </p>
@@ -174,7 +189,7 @@ function Index() {
                       organization: "",
                     });
                   }}
-                  className="mt-6 inline-flex items-center justify-center rounded-full border border-coke-white/20 px-6 py-2.5 text-sm font-semibold text-coke-white transition-colors hover:bg-coke-white/10"
+                  className="mt-6 inline-flex items-center justify-center rounded-full border border-fanta-white/20 px-6 py-2.5 text-sm font-semibold text-fanta-white transition-colors hover:bg-fanta-white/10"
                 >
                   Register another guest
                 </button>
@@ -188,7 +203,7 @@ function Index() {
                 <div className="space-y-1.5">
                   <label
                     htmlFor="fullName"
-                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
                   >
                     Full name
                   </label>
@@ -200,14 +215,14 @@ function Index() {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="e.g. Alex Morgan"
-                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="email"
-                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
                   >
                     Email address
                   </label>
@@ -219,14 +234,14 @@ function Index() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="alex@example.com"
-                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="phone"
-                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
                   >
                     Phone
                   </label>
@@ -237,14 +252,14 @@ function Index() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+251 911 000 000"
-                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="organization"
-                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
                   >
                     Organization / Brand
                   </label>
@@ -255,14 +270,14 @@ function Index() {
                     value={formData.organization}
                     onChange={handleChange}
                     placeholder="e.g. Acme Corp"
-                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
+                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="group relative w-full overflow-hidden rounded-full bg-coke-red px-8 py-4 text-center font-display text-xl tracking-wide text-coke-white transition-all hover:bg-coke-red-glow disabled:cursor-not-allowed disabled:opacity-70"
+                  className="group relative w-full overflow-hidden rounded-full bg-fanta-orange px-8 py-4 text-center font-display text-xl tracking-wide text-fanta-white transition-all hover:bg-fanta-orange-glow disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     {status === "submitting" ? (
@@ -276,9 +291,8 @@ function Index() {
                   </span>
                 </button>
 
-                <p className="text-center text-xs text-coke-white/40">
-                  By registering, you agree to receive event updates from
-                  Coca-Cola. 18+ only.
+                <p className="text-center text-xs text-fanta-white/40">
+                  By registering, you agree to receive event updates from Fanta. 18+ only.
                 </p>
               </form>
             )}

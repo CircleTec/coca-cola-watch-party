@@ -76,25 +76,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Coca-Cola World Cup Finals Watch Party | Register Now" },
+      { title: "Fanta Enqutatash New Year's Eve Concert | Register Now" },
       {
         name: "description",
         content:
-          "Register for the Coca-Cola World Cup Finals Watch Party. Join fans for the ultimate finals-night experience with giant screens, cold Coca-Cola, and unforgettable energy.",
+          "Register for the Fanta Enqutatash New Year's Eve Concert. Join fans for the ultimate New Year experience with live music, cold Fanta, and unforgettable energy.",
       },
-      { name: "author", content: "Coca-Cola" },
+      { name: "author", content: "Fanta" },
       {
         property: "og:title",
-        content: "Coca-Cola World Cup Finals Watch Party",
+        content: "Fanta Enqutatash New Year's Eve Concert",
       },
       {
         property: "og:description",
         content:
-          "Register now for the ultimate World Cup finals watch party experience.",
+          "Register now for the ultimate Ethiopian New Year's Eve concert experience.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@CocaCola" },
+      { name: "twitter:site", content: "@Fanta" },
     ],
     links: [
       {

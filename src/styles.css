@@ -34,11 +34,12 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
-  --color-coke-red: var(--coke-red);
-  --color-coke-black: var(--coke-black);
-  --color-coke-white: var(--coke-white);
-  --color-coke-silver: var(--coke-silver);
-  --color-coke-red-glow: var(--coke-red-glow);
+  --color-fanta-orange: var(--fanta-orange);
+  --color-fanta-black: var(--fanta-black);
+  --color-fanta-white: var(--fanta-white);
+  --color-fanta-silver: var(--fanta-silver);
+  --color-fanta-orange-glow: var(--fanta-orange-glow);
+  --color-fanta-blue: var(--fanta-blue);
 
   --font-display: "Bebas Neue", sans-serif;
   --font-sans: "Barlow", sans-serif;
@@ -55,11 +56,12 @@
 :root {
   --radius: 0.625rem;
 
-  --coke-red: oklch(0.59 0.24 26.5);
-  --coke-red-glow: oklch(0.72 0.18 26.5);
-  --coke-black: oklch(0 0 0);
-  --coke-white: oklch(1 0 0);
-  --coke-silver: oklch(0.78 0 0);
+  --fanta-orange: #f4821f;
+  --fanta-orange-glow: #d86d11;
+  --fanta-black: #1a1a1a;
+  --fanta-white: #ffffff;
+  --fanta-silver: #c8c8c8;
+  --fanta-blue: #193BC0;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.12 0 0);
@@ -67,19 +69,19 @@
   --card-foreground: oklch(0.12 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.12 0 0);
-  --primary: var(--coke-red);
-  --primary-foreground: var(--coke-white);
+  --primary: var(--fanta-orange);
+  --primary-foreground: var(--fanta-white);
   --secondary: oklch(0.96 0 0);
   --secondary-foreground: oklch(0.12 0 0);
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.55 0 0);
-  --accent: var(--coke-black);
-  --accent-foreground: var(--coke-white);
-  --destructive: oklch(0.59 0.24 26.5);
+  --accent: var(--fanta-black);
+  --accent-foreground: var(--fanta-white);
+  --destructive: var(--fanta-orange);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
-  --ring: var(--coke-red);
+  --ring: var(--fanta-orange);
 }
 
 @layer base {
