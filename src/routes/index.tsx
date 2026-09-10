@@ -9,7 +9,7 @@ type IndexSearch = {
 
 const TICKET_MAP: Record<string, string> = {
   "7x9p2q": "Regular",
-  "v4k8m1": "VIP",
+  "v4k8m1": "Vip",
   "z9w3r5": "VVIP",
 };
 
