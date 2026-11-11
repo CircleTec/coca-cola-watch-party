@@ -1,16 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
-const heroImage = "/Fanta-Enkutatash-_All-in-one.jpg";
+const heroImage = "/shik-in-the-garden.jpg";
 
 type IndexSearch = {
   t?: string; // Obfuscated token for ticket type
 };
 
-const TICKET_MAP: Record<string, string> = {
-  "7x9p2q": "Regular",
-  "v4k8m1": "Vip",
+type TicketType = "VIP" | "VVIP";
+
+// The token in the invite link (?t=...) decides which ticket type, and so which form, a guest gets.
+const TICKET_MAP: Record<string, TicketType> = {
+  "v4k8m1": "VIP",
   "z9w3r5": "VVIP",
+};
+
+type FormConfig = {
+  // The long ID from the form's public link: docs.google.com/forms/d/e/<formId>/viewform
+  formId: string;
+  // Each Google Form has its own field IDs, so they are listed per form.
+  entries: {
+    fullName: string;
+    email: string;
+    phone: string;
+    organization: string;
+  };
+};
+
+// One Google Form per ticket type. A type with an empty formId is treated as not open yet.
+const FORMS: Record<TicketType, FormConfig> = {
+  // "Shik VIP"
+  VIP: {
+    formId: "1FAIpQLSd7NuoGFVRay7lMpCsnHdMzaEbIJWe-6bqGyjVTLJknI8FNvw",
+    entries: {
+      fullName: "934219041",
+      email: "812255169",
+      phone: "1644894065",
+      organization: "487064818",
+    },
+  },
+  // "Shik VVIP" (a copy of the VIP form, so the field IDs are the same)
+  VVIP: {
+    formId: "1FAIpQLSeKMF9hJ-4I0YrLve0jEF7MbtrfV0zVC69korTFNbm-q3up8g",
+    entries: {
+      fullName: "934219041",
+      email: "812255169",
+      phone: "1644894065",
+      organization: "487064818",
+    },
+  },
 };
 
 export const Route = createFileRoute("/")({
@@ -26,9 +64,11 @@ type FormStatus = "idle" | "submitting" | "success";
 
 function Index() {
   const { t } = Route.useSearch();
-  // Map the random token to the ticket type, defaulting to Regular if missing or invalid
-  const ticketType = t ? TICKET_MAP[t] || "Regular" : "Regular";
-  
+  // Map the random token to the ticket type. A missing or unknown token has no form to submit to.
+  const ticketType = t ? TICKET_MAP[t] : undefined;
+  const form = ticketType ? FORMS[ticketType] : undefined;
+  const isFormReady = Boolean(form?.formId);
+
   const isRegistrationClosed = false; // We should probably keep this false if they're actively sending links!
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formData, setFormData] = useState({
@@ -40,16 +80,16 @@ function Index() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!form || !form.formId) return;
     setStatus("submitting");
 
-    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSerxQ4L9M5V2UeAHY7-rwEc0IAIGTAXcfUa0dYVuaUx6Sxueg/formResponse";
-    
+    const formUrl = `https://docs.google.com/forms/d/e/${form.formId}/formResponse`;
+
     const formDataParams = new URLSearchParams();
-    formDataParams.append("entry.84460810", formData.fullName);
-    formDataParams.append("entry.1720692364", formData.email);
-    formDataParams.append("entry.340016205", formData.phone);
-    formDataParams.append("entry.546205829", ticketType);
-    formDataParams.append("entry.1711070704", formData.organization);
+    formDataParams.append(`entry.${form.entries.fullName}`, formData.fullName);
+    formDataParams.append(`entry.${form.entries.email}`, formData.email);
+    formDataParams.append(`entry.${form.entries.phone}`, formData.phone);
+    formDataParams.append(`entry.${form.entries.organization}`, formData.organization);
 
     try {
       await fetch(formUrl, {
@@ -75,53 +115,44 @@ function Index() {
   };
 
   return (
-    <main className="relative min-h-screen bg-fanta-black text-fanta-white">
+    <main className="relative min-h-screen bg-coke-black text-coke-white">
       <div className="grid min-h-screen lg:grid-cols-2">
         {/* Hero side */}
-        <section className="relative flex min-h-[40vh] flex-col justify-between overflow-hidden lg:min-h-screen">
-          <img
-            src={heroImage}
-            alt="Crowded Fanta Enqutatash New Year's Eve Concert at night with a giant screen and stadium lights"
-            className="absolute inset-0 h-full w-full object-cover"
-            width={1920}
-            height={1280}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-fanta-black via-fanta-black/70 to-transparent" />
-          <div className="absolute inset-0 bg-fanta-orange/10 mix-blend-multiply" />
-
-          <div className="relative z-20 flex w-full items-start justify-between p-6 sm:p-10 lg:p-16">
+        <section className="relative flex flex-col overflow-hidden bg-coke-black lg:min-h-screen">
+          {/* The poster already carries the Mera × Coca-Cola logos and the title, so it is shown
+              uncovered (cropped from the bottom on desktop) with the copy below it. */}
+          <div className="relative aspect-[1080/972] w-full lg:aspect-auto lg:min-h-[45vh] lg:flex-1">
             <img
-              src="/fanta-logo-white-outline.png"
-              alt="Fanta"
-              className="h-8 w-auto object-contain lg:h-12"
-              
+              src={heroImage}
+              alt="Mera Events and Coca-Cola present Shik in the Garden, with Dawit Melese, Efrem Tamiru and Micheal Belayneh"
+              className="absolute inset-0 h-full w-full object-cover object-top"
+              width={1080}
+              height={972}
             />
-            
+            <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-coke-black to-transparent" />
           </div>
 
-          <div className="relative z-10 p-6 pt-0 sm:p-10 sm:pt-0 lg:p-16 lg:pt-0">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-fanta-white/20 bg-fanta-white/10 px-4 py-2 backdrop-blur-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-fanta-orange" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-fanta-white">
-                RSVP by Sep 8th
+          <div className="relative z-10 p-6 sm:p-10 lg:px-16 lg:pb-16 lg:pt-8">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-coke-white/20 bg-coke-white/10 px-4 py-2 backdrop-blur-sm">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-coke-red" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-coke-white">
+                RSVP by Friday, Nov 13
               </span>
             </div>
 
-            <h1 className="font-you2013 text-6xl leading-[0.9] tracking-tight text-fanta-white sm:text-7xl lg:text-8xl">
-              ENQUTATASH
+            <h1 className="font-you2013 text-5xl leading-[0.9] tracking-tight text-coke-white sm:text-6xl xl:text-7xl">
+              SHIK <span className="text-coke-red">IN THE</span>
               <br />
-              <span className="text-fanta-orange">NEW YEAR'S EVE</span>
-              <br />
-              CONCERT
+              GARDEN
             </h1>
 
-            <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-fanta-white/90 sm:text-xl">
-              Join us for the ultimate celebration. Experience an unforgettable
-              New Year's Eve with live music, ice-cold Fanta, and
-              electric energy as we ring in the Ethiopian New Year.
+            <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-coke-white/90 sm:text-xl">
+              Join us for an unforgettable evening in the garden. Live music
+              from Dawit Melese, Efrem Tamiru and Micheal Belayneh, ice-cold
+              Coca-Cola, and a night you won&apos;t forget.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-fanta-white/80">
+            <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
               <div className="flex items-center gap-2">
                 <CalendarIcon />
                 <span>Sep 10, 2026</span>
@@ -139,44 +170,60 @@ function Index() {
         </section>
 
         {/* Form side */}
-        <section className="relative flex flex-col justify-center bg-fanta-black px-6 py-12 sm:px-10 lg:px-16">
+        <section className="relative flex flex-col justify-center bg-coke-black px-6 py-12 sm:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-md">
             <div className="mb-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fanta-orange">
-                Fanta presents
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-coke-red">
+                Mera Events × Coca-Cola present
               </p>
-              <h2 className="mt-2 font-display text-4xl tracking-tight text-fanta-white sm:text-5xl">
+              <h2 className="mt-2 font-display text-4xl tracking-tight text-coke-white sm:text-5xl">
                 {isRegistrationClosed ? "RSVP CLOSED" : "RESERVE YOUR SPOT"}
               </h2>
-              <p className="mt-3 text-fanta-white/70">
-                {isRegistrationClosed 
-                  ? "The RSVP window has ended. Please reach out to the organizers if you have any questions."
-                  : "Fill in your details below to confirm your RSVP. We'll send your entry pass via email once approved by the organizer."}
-              </p>
+              {(isRegistrationClosed || isFormReady) && (
+                <p className="mt-3 text-coke-white/70">
+                  {isRegistrationClosed
+                    ? "The RSVP window has ended. Please reach out to the organizers if you have any questions."
+                    : "Fill in your details below to confirm your RSVP. We'll send your entry pass via email once approved by the organizer."}
+                </p>
+              )}
             </div>
 
             {isRegistrationClosed ? (
-              <div className="rounded-2xl border border-fanta-white/20 bg-fanta-white/5 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-fanta-orange text-fanta-white">
+              <div className="rounded-2xl border border-coke-white/20 bg-coke-white/5 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
                   <InfoIcon />
                 </div>
-                <h3 className="font-display text-3xl text-fanta-white">
+                <h3 className="font-display text-3xl text-coke-white">
                   REGISTRATION CLOSED
                 </h3>
-                <p className="mt-3 text-fanta-white/80">
+                <p className="mt-3 text-coke-white/80">
                   The RSVP window has closed. Thank you for your interest!
                 </p>
               </div>
+            ) : !isFormReady ? (
+              <div className="rounded-2xl border border-coke-white/20 bg-coke-white/5 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
+                  <InfoIcon />
+                </div>
+                <h3 className="font-display text-3xl text-coke-white">
+                  {ticketType ? `${ticketType} RSVP OPENS SOON` : "INVITATION LINK NEEDED"}
+                </h3>
+                <p className="mt-3 text-coke-white/80">
+                  {ticketType
+                    ? "Registration for this invitation isn't open yet. Please check back shortly."
+                    : "This event is by invitation. Please open the personal link you received to RSVP."}
+                </p>
+              </div>
             ) : status === "success" ? (
-              <div className="rounded-2xl border border-fanta-orange/30 bg-fanta-orange/10 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-fanta-orange text-fanta-white">
+              <div className="rounded-2xl border border-coke-red/30 bg-coke-red/10 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-coke-red text-coke-white">
                   <CheckIcon />
                 </div>
-                <h3 className="font-display text-3xl text-fanta-white">
+                <h3 className="font-display text-3xl text-coke-white">
                   RSVP RECEIVED
                 </h3>
-                <p className="mt-3 text-fanta-white/80">
-                  Your RSVP is being reviewed. We&apos;ll send your watch party pass
+                <p className="mt-3 text-coke-white/80">
+                  Your RSVP is being reviewed. We&apos;ll send your entry pass
                   once the organizer confirms your spot!
                 </p>
                 <button
@@ -189,7 +236,7 @@ function Index() {
                       organization: "",
                     });
                   }}
-                  className="mt-6 inline-flex items-center justify-center rounded-full border border-fanta-white/20 px-6 py-2.5 text-sm font-semibold text-fanta-white transition-colors hover:bg-fanta-white/10"
+                  className="mt-6 inline-flex items-center justify-center rounded-full border border-coke-white/20 px-6 py-2.5 text-sm font-semibold text-coke-white transition-colors hover:bg-coke-white/10"
                 >
                   Register another guest
                 </button>
@@ -198,12 +245,12 @@ function Index() {
               <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
-                aria-label="Watch party registration form"
+                aria-label="Event registration form"
               >
                 <div className="space-y-1.5">
                   <label
                     htmlFor="fullName"
-                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
                   >
                     Full name
                   </label>
@@ -215,14 +262,14 @@ function Index() {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="e.g. Alex Morgan"
-                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="email"
-                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
                   >
                     Email address
                   </label>
@@ -234,14 +281,14 @@ function Index() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="alex@example.com"
-                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="phone"
-                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
                   >
                     Phone
                   </label>
@@ -249,17 +296,18 @@ function Index() {
                     id="phone"
                     name="phone"
                     type="tel"
+                    required
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+251 911 000 000"
-                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label
                     htmlFor="organization"
-                    className="text-xs font-semibold uppercase tracking-wider text-fanta-white/70"
+                    className="text-xs font-semibold uppercase tracking-wider text-coke-white/70"
                   >
                     Organization / Brand
                   </label>
@@ -270,14 +318,14 @@ function Index() {
                     value={formData.organization}
                     onChange={handleChange}
                     placeholder="e.g. Acme Corp"
-                    className="w-full rounded-xl border border-fanta-white/15 bg-fanta-white/5 px-4 py-3 text-fanta-white placeholder:text-fanta-white/30 focus:border-fanta-orange focus:outline-none focus:ring-1 focus:ring-fanta-orange"
+                    className="w-full rounded-xl border border-coke-white/15 bg-coke-white/5 px-4 py-3 text-coke-white placeholder:text-coke-white/30 focus:border-coke-red focus:outline-none focus:ring-1 focus:ring-coke-red"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="group relative w-full overflow-hidden rounded-full bg-fanta-orange px-8 py-4 text-center font-display text-xl tracking-wide text-fanta-white transition-all hover:bg-fanta-orange-glow disabled:cursor-not-allowed disabled:opacity-70"
+                  className="group relative w-full overflow-hidden rounded-full bg-coke-red px-8 py-4 text-center font-display text-xl tracking-wide text-coke-white transition-all hover:bg-coke-red-glow disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     {status === "submitting" ? (
@@ -291,8 +339,8 @@ function Index() {
                   </span>
                 </button>
 
-                <p className="text-center text-xs text-fanta-white/40">
-                  By registering, you agree to receive event updates from Fanta. 18+ only.
+                <p className="text-center text-xs text-coke-white/40">
+                  By registering, you agree to receive event updates from Coca-Cola. 18+ only.
                 </p>
               </form>
             )}

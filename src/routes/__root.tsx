@@ -76,32 +76,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Fanta Enqutatash New Year's Eve Concert | Register Now" },
+      { title: "Coca-Cola Shik in the Garden | Register Now" },
       {
         name: "description",
         content:
-          "Register for the Fanta Enqutatash New Year's Eve Concert. Join fans for the ultimate New Year experience with live music, cold Fanta, and unforgettable energy.",
+          "Register for Shik in the Garden, presented by Mera Events and Coca-Cola. Live music from Dawit Melese, Efrem Tamiru and Micheal Belayneh, cold Coca-Cola, and unforgettable energy.",
       },
-      { name: "author", content: "Fanta" },
+      { name: "author", content: "Coca-Cola" },
       {
         property: "og:title",
-        content: "Fanta Enqutatash New Year's Eve Concert",
+        content: "Coca-Cola Shik in the Garden",
       },
       {
         property: "og:description",
         content:
-          "Register now for the ultimate Ethiopian New Year's Eve concert experience.",
+          "Register now for Shik in the Garden with Dawit Melese, Efrem Tamiru and Micheal Belayneh.",
       },
       { property: "og:type", content: "website" },
       {
         property: "og:image",
-        content: "https://fantaenqutatash.vercel.app/Fanta-Enkutatash-_All-in-one.jpg",
+        content: "https://fantaenqutatash.vercel.app/shik-in-the-garden.jpg",
       },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Fanta" },
+      { name: "twitter:site", content: "@CocaCola" },
       {
         name: "twitter:image",
-        content: "https://fantaenqutatash.vercel.app/Fanta-Enkutatash-_All-in-one.jpg",
+        content: "https://fantaenqutatash.vercel.app/shik-in-the-garden.jpg",
       },
     ],
     links: [
@@ -122,7 +122,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: GOOGLE_FONTS_URL,
       },
-      { rel: "icon", href: "/fanta-logo-white-outline.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,
