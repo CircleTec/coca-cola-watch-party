@@ -155,7 +155,7 @@ function Index() {
             <div className="mt-8 flex flex-wrap items-center gap-6 text-sm font-medium uppercase tracking-wider text-coke-white/80">
               <div className="flex items-center gap-2">
                 <CalendarIcon />
-                <span>Sep 10, 2026</span>
+                <span>Nov 14, 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <ClockIcon />
