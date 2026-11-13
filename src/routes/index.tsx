@@ -60,6 +60,11 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// Switch registration here: "open" shows the form, "paused" hides it for now,
+// "closed" hides it for good. Set it back to "open" to resume taking RSVPs.
+type RegistrationStatus = "open" | "paused" | "closed";
+const REGISTRATION_STATUS = "paused" as RegistrationStatus;
+
 type FormStatus = "idle" | "submitting" | "success";
 
 function Index() {
@@ -69,7 +74,9 @@ function Index() {
   const form = ticketType ? FORMS[ticketType] : undefined;
   const isFormReady = Boolean(form?.formId);
 
-  const isRegistrationClosed = false; // We should probably keep this false if they're actively sending links!
+  const isRegistrationPaused = REGISTRATION_STATUS === "paused";
+  // Paused and closed both hide the form; only the wording differs.
+  const isRegistrationClosed = REGISTRATION_STATUS !== "open";
   const [status, setStatus] = useState<FormStatus>("idle");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -177,11 +184,17 @@ function Index() {
                 Mera Events × Coca-Cola present
               </p>
               <h2 className="mt-2 font-display text-4xl tracking-tight text-coke-white sm:text-5xl">
-                {isRegistrationClosed ? "RSVP CLOSED" : "RESERVE YOUR SPOT"}
+                {isRegistrationPaused
+                  ? "RSVP PAUSED"
+                  : isRegistrationClosed
+                    ? "RSVP CLOSED"
+                    : "RESERVE YOUR SPOT"}
               </h2>
               {(isRegistrationClosed || isFormReady) && (
                 <p className="mt-3 text-coke-white/70">
-                  {isRegistrationClosed
+                  {isRegistrationPaused
+                    ? "We're not taking RSVPs right now. Please reach out to the organizers if you have any questions."
+                    : isRegistrationClosed
                     ? "The RSVP window has ended. Please reach out to the organizers if you have any questions."
                     : "Fill in your details below to confirm your RSVP. We'll send your entry pass via email once approved by the organizer."}
                 </p>
@@ -194,10 +207,12 @@ function Index() {
                   <InfoIcon />
                 </div>
                 <h3 className="font-display text-3xl text-coke-white">
-                  REGISTRATION CLOSED
+                  {isRegistrationPaused ? "REGISTRATION PAUSED" : "REGISTRATION CLOSED"}
                 </h3>
                 <p className="mt-3 text-coke-white/80">
-                  The RSVP window has closed. Thank you for your interest!
+                  {isRegistrationPaused
+                    ? "Registration is paused for the moment. Thank you for your interest!"
+                    : "The RSVP window has closed. Thank you for your interest!"}
                 </p>
               </div>
             ) : !isFormReady ? (
